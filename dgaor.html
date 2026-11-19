@@ -3,29 +3,47 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="Jmol, see http://www.jmol.org">
-  <meta name="author" content="Joel Rodriguez">
-  <meta name="keywords" content="generated_by_Jmol_Webexport">
-  <title>DgAOR</title>
+  <meta name ="author" content = "Generador de p&#225;ginas web de Jmol">
+  <meta name ="keywords" content = "generated_by_Jmol_Webexport">
+  <title>Una p&#225;gina web con objetos JSmol</title>
   <style type="text/css">
+	body, html { height:100%; overflow:hidden; margin:0; padding:0; }
 	h1 { font-size:1.5em; text-align:center; }
 	.section { clear:both; padding:0.6em 0; }
-	.sceneWrapper {
-		border:1px solid gray;
-		border-radius:1ex;
-		margin:0.3em 1ex; 
-		font-size:0.9em; 
-	}
-	.sceneWrapper td {
-		padding:0.5ex;
-	}
-  .JmolDiv { 
-		padding:0.3em 0.5ex; 
-		font-size:0.9em; 
-		background-repeat:no-repeat; 
-		background-position:center;
+	#Text_Buttons { padding:0 1ex; }
+  #JSmol_loading_msg{
+      color:orange;
   }
-  .floatRight { float:right; }
-  .floatLeft { float:left; }
+  .JmolTextPane {
+		position:absolute; top:0; 
+		left:0;
+		width:40%;
+		height:100%;
+		overflow:auto;
+  }
+  .JmolPane {
+		position:absolute; top:0; 
+		left:40%;
+		width:60%;
+		height:100%;
+		overflow:hidden;
+  }
+  .JmolViewerPane{
+		width:99%;
+		height:85%;
+		overflow:hidden;
+  }
+  .JmolWidgetPane {
+		width:100%;
+		height:15%;
+		overflow:auto;
+		font-size:0.9em;
+  }
+  .JmolWidgetPane table { margin:0 auto; }
+  .JmolButtonDiv{
+      width:99%;
+      text-align:center;
+  }
   .update-info {
 		clear:both;
 		padding-top:1em;
@@ -37,20 +55,25 @@
 		padding-top:0.2em;
 		margin-bottom:1em;
 	}
-	.widgetItemPopin { /* each widget in a PopIn page goes in a div with this class */
-		 margin:0.2em 0;
+	.widgetItemScBtn { /* each widget in a ScriptButton page goes in a table cell with this class */
+		text-align:center; padding:0.5ex;
 	}
-  </style>  
+	.widgetItemAnim { /* AnimationWidget is taller than the others, put it to the right so everything fits better */
+		 float:right;margin:2px 5px;
+	}
+	.JmolColorPicker_vis { position:relative!important; } /*override, to allow scrolling to bottom of palette*/
 
+  </style>
   <!-- Below is used locally but not on server. May generate warnings. -->
   <script type="text/javascript" src="http://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
   <script src="support.js" type="text/javascript"></script>
   
+<script src="JmolAnimationCntrl.js" type="text/javascript"></script>
   
   <!-- Below is used on server, but not locally. May generate warnings.-->
   <script type="text/javascript" src="http://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
   <script type="text/javascript">
-  var jmolApplet; //our viewer
+  var jmolApplet0 = "jmolApplet0"; //our viewer
   var jmolInfo; //setup parameters
   ;(function() {
 
@@ -64,22 +87,28 @@
 var s = document.location.search;
 Jmol.debugCode = (s.indexOf("debugcode") >= 0);
 
-jmol_isReady = function(jmolApplet) {
-}		
 
-jmolInfo = { //default values
+jmol_isReady = function(jmolApplet) {
+    elem = document.getElementById("JSmol_loading_msg");
+    elem.style.visibility="hidden";
+    elem.style.height="0";
+    elem.style.border="none";
+ }		
+
+
+jmolInfo = {
 	width: "100%",
 	height: "100%",
 	debug: false,
 	color: "white",
 	addSelectionOptions: false,
 	use: "HTML5",
-	coverImage: "@APPLETNAME0@.png",        // initial image instead of applet
+	coverImage: "dgaor_jsmol.png",        // initial image instead of applet
 	coverScript: "",	// special script for click of cover image (otherwise equal to script)
-	deferApplet: true,                  // wait to load applet until click
+	deferApplet: false,                  // wait to load applet until click
 	deferUncover: true,                 // wait to uncover applet until script completed
-		//The paths below assume your server is set up with standard JSmol directory.  If not
-		//they will need modification for the page to work.
+	//The paths below assume your server is set up with standard JSmol directory.  If not
+	//they will need modification for the page to work.
 	jarPath: "http://chemapps.stolaf.edu/jmol/jsmol/java", //path to applet .jar files on server.
 	j2sPath: "http://chemapps.stolaf.edu/jmol/jsmol/j2s",//path to javascript version.
 	serverURL: "http://chemapps.stolaf.edu/jmol/jsmol/php/jsmol.php", //if your own server does not allow php, you can change to http://chemapps.stolaf.edu/jmol/jsmol/php/jsmol.php
@@ -89,7 +118,8 @@ jmolInfo = { //default values
 	//disableJ2SLoadMonitor: true,
 	disableInitialConsole: true,
 	readyFunction: jmol_isReady,
-	script: ""
+	//defaultModel: "ethylene/ethylene.xyz",
+	script: "load dgaor_jsmol.spt"
 }
 
 // ?_USE=JAVA   ?_USE=SIGNED   ?_USE=HTML5
@@ -119,72 +149,82 @@ jmolInfo = { //default values
   }
 })();
 
-$(document).ready(function(){//set up each of the applet locations
-	   var jmolInfo0=jmolInfo;
-   jmolInfo0.coverImage="dgaor_jsmol.png";
-   jmolInfo0.coverScript="javascript revealPopinWidgets(0);";
-   jmolInfo0.script="load dgaor_jsmol.spt";
-   $("#Jmol0").html(Jmol.getAppletHtml("jmolApplet0",jmolInfo0));
-
+$(document).ready(function(){
+    $("#Jmol").html(Jmol.getAppletHtml(jmolApplet0, jmolInfo));
 });
   </script>
+
 </head>
 <body>
-    <div id="introdiv">
-      <h1 id="titlediv">
+  <div class="JmolTextPane">
+    <div id="Text_Buttons">
+      <div id="JSmol_loading_msg">
+        Una vez el archivo de la mol&#233;cula se haya cargado completo, la imagen de la derecha se convertir&#225; en un objeto activo.  Entonces, desaparecer&#225; el icono "activate 3-D" <img id="make_live_icon" src="" height="15px" />.
+				<hr>
+      </div>
+      <h1>
         Inserta aqu&#237; el T&#205;TULO.
       </h1>
-      Inserta aqu&#237; la INTRODUCCI&#211;N.
+			<p>Inserta aqu&#237; la INTRODUCCI&#211;N.
+			</p>
+			<div>
+      <div id="section_dgaor_jsmol" class="section">
+
+Se mostrar&#225; el bot&#243;n &#x201C;dgaor.jsmol&#x201D; en el recuadro de aqu&#237; abajo.  Inserta la informaci&#243;n de &#x201C;dgaor.jsmol&#x201D; aqu&#237; y tambi&#233;n m&#225;s abajo.
+  <div id="dgaor_jsmol" class="JmolButtonDiv">    
+    <button onclick="Jmol.script(jmolApplet0,'load dgaor_jsmol.spt;'); updateScriptButtonWidgets(0);">dgaor.jsmol</button>
+    <div id="jmolCntl0" style="visibility:hidden; display:none;">
+      <div class="widgetItemAnim"> <div class="AnimBox"><div style="text-align:center">Animaci&#243;n</div><div><button title="Primer fotograma" onclick="void(Jmol.scriptWait(window['jmolApplet0'], 'frame rewind'));"><img src="firstButton.png"></button><button title="Fotograma anterior" onclick="void(Jmol.scriptWait(window['jmolApplet0'], 'frame previous'));"><img src="prevButton.png"></button><button title="Reproducir" onclick="void(Jmol.scriptWait(window['jmolApplet0'], 'frame play'));"><img src="playButton.png"></button><button title="Siguiente fotograma" onclick="void(Jmol.scriptWait(window['jmolApplet0'], 'frame next'));"><img src="nextButton.png"></button><button title="Pausa" onclick="void(Jmol.scriptWait(window['jmolApplet0'], 'frame pause'));"><img src="pauseButton.png"></button><button title="&#218;ltimo fotograma" onclick="void(Jmol.scriptWait(window['jmolApplet0'], 'frame last'));"><img src="lastButton.png"></button></div><div><span>Modo:</span><span id="jmol_loop_0"><button title="Bucle" onclick="jmol_animationmode('loop',0);"><img src="playLoopButton.png"></button></span><span id="jmol_palindrome_0"><button title="Pal&#237;ndromo" onclick="jmol_animationmode('palindrome', 0);"><img src="playPalindromeButton.png"></button></span><span class="jmol_playDefault" id="jmol_playOnce_0"><button title="Reproducir una vez" onclick="jmol_animationmode('playOnce', 0);"><img src="playOnceButton.png"></button></span></div></div></div><table><tbody><tr><td class="widgetItemScBtn"><input type="checkbox" id="JmolSpinWidget0" onclick="Jmol.scriptWait(window['jmolApplet0'], 'spin ' + (this.checked ? 'on' : 'off'));" title="activa o desactiva el giro" /><label for="JmolSpinWidget0">girando</label></td></tr></tbody></table>
     </div>
-
-    
-
-    <div id="section_dgaor_jsmol" class="section">
-	<table id="scene_dgaor_jsmol" class="sceneWrapper floatRight" style="width:600px;">
-		<tr>
-			<td id="leftJmolCntl0" style="visibility:hidden"></td>
-			<td style="width:600px;">
-			<div id="Jmol0" class="JmolDiv" style="width:600px; height:600px; background-image:url(dgaor_jsmol.png)">
-				Jmol0 will appear here.
-			</div>
-			</td>
-			<td id="rightJmolCntl0" style="visibility:hidden"></td>
-		</tr>
-		<tr>
-			<td colspan="3">     
-				PULSA EN LA IMAGEN PARA ACTIVAR EL 3D<br/>Inserta aqu&#237; una leyenda para &#x201C;dgaor.jsmol&#x201D;.		
-			</td>
-		</tr>
-	</table>
-	<div id="text_dgaor_jsmol">
-		Inserta aqu&#237; texto explicativo adicional. Si el texto es largo, rodear&#225; al modelo Jmol &#x201C;dgaor.jsmol&#x201D;.
-	</div>
+  </div>
+M&#225;s informaci&#243;n para &#x201C;dgaor.jsmol&#x201D;.
+  
 </div>
 
+			</div>
+      <p>Puedes ver de nuevo cualquiera de estas escenas intermedias pulsando en el bot&#243;n respectivo.
+			</p>
+       <div id="creationdiv" class="update-info">
+       Armaz&#243;n de la p&#225;gina y JavaScript generados por el m&#243;dulo Exportar a P&#225;gina Web de  <a href="http://jmol.sourceforge.net">Jmol 16.1.37  2023-09-04 15:55</a>  el 19 nov. 2026.
+       </div>
+      <div id="authordiv" class="update-info">
+        Basado en una plantilla de A. Herr&#x00E1;ez y J. Gutow
+       </div>
+			 <!-- p style="font-size:0.8em;">Si la combinaci&#243;n de tu navegador y tu sistema operativo admite Java, puedes conseguir un comportamiento m&#225;s &#225;gil <a href="?use=JAVA">usando Java</a></p -->
 
-
-    <div id="creationdiv" class="update-info">
-      Armaz&#243;n de la p&#225;gina y JavaScript generados por el m&#243;dulo Exportar a P&#225;gina Web de  <a href="http://jmol.sourceforge.net">Jmol 16.1.37  2023-09-04 15:55</a>  el 19 nov. 2026.
-    </div>
-    <div id="authordiv" class="update-info">
-      Basado en una plantilla de A. Herr&#x00E1;ez y J. Gutow
-    </div>
-    <div id="logdiv" style="display:none">
-      <pre>
+       <div id="logdiv" style="display:none">
+         <pre>
 Usando la carpeta /home/jrodriguez
   añadiendo support.js
   ...jmolApplet0
       ...añadiendo dgaor_jsmol.png
-      ...copiando
-https://files.rcsb.org/download/1VLB.pdb
-         a
-      ...comprimiendo archivo de datos grande a
-/home/jrodriguez/1VLB.pdb.gz
-/home/jrodriguez/1VLB.pdb.gz
       ...añadiendo dgaor_jsmol.spt
+  añadiendo JmolAnimationCntrl.js
+  añadiendo lastButton.png
+  añadiendo playButton.png
+  añadiendo playLoopButton.png
+  añadiendo playOnceButton.png
+  añadiendo playPalindromeButton.png
+  añadiendo prevButton.png
+  añadiendo pauseButton.png
+  añadiendo nextButton.png
+  añadiendo firstButton.png
 
 </pre>
 
+       </div>    
     </div>
+  </div>
+	<div id="Viewer_and_Widgets" class="JmolPane">
+		<div id="Jmol" class="JmolViewerPane">This will be the viewer
+				 <img src="dgaor_jsmol.png" alt="still of jmol image" style="height:100%; width:100%"/>
+		</div>
+		<div id="JmolWidgets" class="JmolWidgetPane">
+			<div id="JmolCntl"></div>
+		</div>
+	</div>
+<script type="text/javascript">
+fixScriptButtonWidgets(1);
+</script>
 </body>
 </html>
