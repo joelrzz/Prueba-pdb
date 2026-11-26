@@ -1,4 +1,5 @@
 # Jmol state version 16.1.37  2023-09-04 15:55;
+#DgAOR-ribbon from PDB
 
 function _setWindowState() {
 # width 1023;
